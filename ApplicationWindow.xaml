@@ -1,0 +1,378 @@
+﻿<Window x:Class="WPF_Login.ApplicationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Login"
+		xmlns:tb="http://www.hardcodet.net/taskbar"
+        mc:Ignorable="d"
+		
+        x:Name="Application_Window"
+		Title="Application Window"
+		Height="450"
+		Width="800"
+		
+		WindowStartupLocation="CenterOwner"
+		
+		TextOptions.TextFormattingMode="Display"
+		TextOptions.TextHintingMode="Animated">
+
+	<WindowChrome.WindowChrome>
+		<WindowChrome UseAeroCaptionButtons="False" CaptionHeight="0" />
+	</WindowChrome.WindowChrome>
+
+	<Border x:Name="ContentWindow">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="30" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<Border Background="Transparent"
+				BorderThickness="0,0,0,1"
+				BorderBrush="Silver"
+				MouseLeftButtonDown="DragWindow">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="30" />
+						<ColumnDefinition Width="30" />
+					</Grid.ColumnDefinitions>
+
+					<TextBlock Text="Application Window"
+						   FontFamily="./#Roboto"
+						   FontSize="13"
+						   VerticalAlignment="Center"
+						   Margin="8,0,0,0"/>
+
+					<TextBlock Text="6"
+						   FontFamily="Webdings"
+						   FontSize="13"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Grid.Column="1"
+						   Width="30"
+						   Height="20"
+						   Cursor="Hand"
+						   TextAlignment="Center"
+						   Background="Transparent"
+						   MouseLeftButtonDown="ToggleSettingsContext"
+						   MouseEnter="Settings_MouseEnter"
+						   MouseLeave="Settings_MouseLeave">
+						<TextBlock.ToolTip>
+							<ToolTip x:Name="SettingsToolTip"
+								 Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Opens a context menu with a list of options relating to the application's settings"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</TextBlock.ToolTip>
+					</TextBlock>
+
+					<TextBlock Text="0"
+						   FontFamily="Webdings"
+						   FontSize="13"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Grid.Column="2"
+						   Cursor="Hand"
+						   Width="30"
+						   Height="20"
+						   TextAlignment="Center"
+						   Background="Transparent"
+						   MouseEnter="Minimize_MouseEnter"
+						   MouseLeave="Minimize_MouseLeave"
+						   MouseLeftButtonDown="MinimizeWindow">
+						<TextBlock.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Minimizes the window"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</TextBlock.ToolTip>
+					</TextBlock>
+
+					<TextBlock x:Name="Maximize"
+						Text="1"
+						   FontFamily="Webdings"
+						   FontSize="13"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Grid.Column="3"
+						   Cursor="Hand"
+						   Width="30"
+						   Height="20"
+						   TextAlignment="Center"
+						   Background="Transparent"
+						   MouseEnter="Maximize_MouseEnter"
+						   MouseLeave="Maximize_MouseLeave"
+						   MouseLeftButtonDown="MaximizeWindow">
+						<TextBlock.ToolTip>
+							<ToolTip x:Name="MaximizeToolTip"
+								 Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Maximizes the window used to access the account"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</TextBlock.ToolTip>
+					</TextBlock>
+
+					<TextBlock Text="r"
+						   FontFamily="Webdings"
+						   FontSize="13"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Center"
+						   Grid.Column="4"
+						   Cursor="Hand"
+						   Width="30"
+						   Height="20"
+						   TextAlignment="Center"
+						   Background="Transparent"
+						   MouseEnter="Close_MouseEnter"
+						   MouseLeave="Close_MouseLeave"
+						   MouseLeftButtonDown="CloseWindow">
+						<TextBlock.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Closes the window"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</TextBlock.ToolTip>
+					</TextBlock>
+				</Grid>
+			</Border>
+
+			<Border x:Name="SettingsMenu"
+				Background="White"
+				CornerRadius="4"
+				Height="197"
+				Width="150"
+				Grid.RowSpan="2"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Right"
+				Visibility="Hidden">
+				<Border.Effect>
+					<DropShadowEffect BlurRadius="8"
+								  Direction="270"
+								  Opacity="0.5"
+								  ShadowDepth="2"/>
+				</Border.Effect>
+				<Border.RenderTransform>
+					<TranslateTransform X="-30" Y="35" />
+				</Border.RenderTransform>
+
+				<Grid Margin="5">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="1" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="1" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="1" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Border Grid.Row="1"
+						Background="Silver"
+						Height="1"/>
+					<Border Grid.Row="3"
+						Background="Silver"
+						Height="1"/>
+					<Border Grid.Row="5"
+						Background="Silver"
+						Height="1"/>
+
+					<Label x:Name="TOPMOST"
+						   Content="Always On Top: √"
+					   FontFamily="./#Hind Siliguri"
+					   FontSize="14"
+					   VerticalContentAlignment="Center"
+					   HorizontalContentAlignment="Center"
+					   Background="Transparent"
+					   Cursor="Hand"
+					   MouseEnter="Topmost_MouseEnter"
+					   MouseLeave="Topmost_MouseLeave"
+						   MouseLeftButtonDown="Toggle_Topmost">
+						<Label.Resources>
+							<Style TargetType="Border">
+								<Setter Property="CornerRadius" Value="3,3,0,0" />
+							</Style>
+						</Label.Resources>
+						<Label.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Toggles the TOPMOST state of the window&#10;
+								 Checkmark -> Window resides above all other windows&#10;
+								 No Checkmark -> Window acts like a normal window and goes behind any currently focused windows"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</Label.ToolTip>
+					</Label>
+
+					<Label x:Name="MinToTaskbar"
+						Content="Min To Taskbar: √"
+					   Grid.Row="2"
+					   FontFamily="./#Hind Siliguri"
+					   FontSize="14"
+					   VerticalContentAlignment="Center"
+					   HorizontalContentAlignment="Center"
+					   Background="Transparent"
+					   Cursor="Hand"
+					   MouseEnter="MinToTaskbar_MouseEnter"
+					   MouseLeave="MinToTaskbar_MouseLeave"
+						   MouseLeftButtonDown="Toggle_MinToTaskbar">
+						<Label.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Determines whether or not the window will minimize to the system tray or the taskbar when minimized"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</Label.ToolTip>
+					</Label>
+
+					<Label x:Name="Account"
+						   Content="Account"
+					   Grid.Row="4"
+					   FontFamily="./#Hind Siliguri"
+					   FontSize="14"
+					   VerticalContentAlignment="Center"
+					   HorizontalContentAlignment="Center"
+					   Background="Transparent"
+					   Cursor="Hand"
+					   MouseEnter="Account_MouseEnter"
+					   MouseLeave="Account_MouseLeave"
+						   MouseLeftButtonDown="AccountInformation">
+						<Label.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Opens a window displaying information about your account on this program"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</Label.ToolTip>
+					</Label>
+
+					<Label x:Name="Signout"
+						   Content="Sign Out"
+					   Grid.Row="6"
+					   FontFamily="./#Hind Siliguri"
+					   FontSize="14"
+					   VerticalContentAlignment="Center"
+					   HorizontalContentAlignment="Center"
+					   Background="Transparent"
+					   Cursor="Hand"
+					   MouseEnter="SignOut_MouseEnter"
+					   MouseLeave="SignOut_MouseLeave"
+						   MouseLeftButtonDown="SignOut">
+						<Label.Resources>
+							<Style TargetType="Border">
+								<Setter Property="CornerRadius" Value="0,0,3,3" />
+							</Style>
+						</Label.Resources>
+						<Label.ToolTip>
+							<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Signs you out of your account and exits the application entirely"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+						</Label.ToolTip>
+					</Label>
+				</Grid>
+			</Border>
+
+			<tb:TaskbarIcon x:Name="TrayIcon"
+							Visibility="Hidden"
+							ToolTipText="{Binding ElementName=Application_Window, Path=Title}"
+							IconSource="{Binding ElementName=Application_Window, Path=Icon}"
+							MenuActivation="LeftOrRightClick">
+				<tb:TaskbarIcon.ContextMenu>
+					<ContextMenu>
+						<MenuItem x:Name="TopmostItem"
+								  Header="Always On Top: √"
+								  FontFamily="./#Roboto"
+								  FontSize="12"
+								  Focusable="False"
+								  Cursor="Hand"
+								  Click="Toggle_Topmost_Click"/>
+						<MenuItem x:Name="MinToTaskbarItem"
+								  Header="Min To Taskbar: √"
+								  FontFamily="./#Roboto"
+								  FontSize="12"
+								  Focusable="False"
+								  Cursor="Hand"
+								  Click="Toggle_MinToTaskbar_Click"/>
+						<MenuItem x:Name="AccountItem"
+								  Header="Account"
+								  FontFamily="./#Roboto"
+								  FontSize="12"
+								  Focusable="False"
+								  Cursor="Hand"
+								  Click="AccountInformation_Click"/>
+						<MenuItem x:Name="SignOutItem"
+								  Header="Sign Out"
+								  FontFamily="./#Roboto"
+								  FontSize="12"
+								  Focusable="False"
+								  Cursor="Hand"
+								  Click="SignOut_Click"/>
+						
+						<Separator/>
+
+						<MenuItem x:Name="ReopenWindowItem"
+								  Header="Re-Open Window"
+								  FontFamily="./#Roboto"
+								  FontSize="12"
+								  Focusable="False"
+								  Cursor="Hand"
+								  Click="ReopenWindow">
+							<MenuItem.ToolTip>
+								<ToolTip Background="White"
+								 BorderThickness="1"
+								 BorderBrush="Black"
+								 Foreground="Black"
+								 Padding="10,5"
+								 Content="Re-opens the window and removes the tray icon from the system tray"
+								 FontFamily="./#Hind Siliguri"
+								 FontSize="12"
+								 VerticalContentAlignment="Center"/>
+							</MenuItem.ToolTip>
+						</MenuItem>
+					</ContextMenu>
+				</tb:TaskbarIcon.ContextMenu>
+			</tb:TaskbarIcon>
+		</Grid>
+	</Border>
+</Window>
