@@ -1,4 +1,4 @@
-# WPF-Login
+# WPF-Login - This project will no longer be updated.
 ## Description
 A simple application template that can be used for making an application with basic security that hides account name/password from the average user on a computer.
 
